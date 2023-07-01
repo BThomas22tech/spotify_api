@@ -18,7 +18,6 @@ require('dotenv').config();
 
 const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
-// const access_token = process.env.ACCESS_TOKEN;
 
 async function api_post_call() {
     var authOptions = {
@@ -38,20 +37,21 @@ async function api_post_call() {
             if (data.access_token) {
                 var token = data.access_token;
                 var token_type = data.token_type;
-                var expires_in = data.expires_in
+                var expires_in = data.expires_in 
                 console.log(token)
                 console.log(token_type)
                 console.log(expires_in)
+                get_api(token)
             }
         })
         .catch(error => console.error(error));
     }
 api_post_call()
 
-function get_api() {
+function get_api(token) {
     fetch("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb", {
         headers: {
-            Authorization: 'Bearer BQC7eLCIPPLhD5-ehU_Vlh5TDCHqpPSML0tD1MtyRasQFsWQ3dZ_WAWmiZz0CTpKh-E0xH2ZXmJp9ILBp-ichjyOu1n4VRJIGusrEzEZ-QV5DU6qOts'
+            Authorization: 'Bearer ' + token,
         }
     })
         .then(response => response.json())
@@ -61,4 +61,4 @@ function get_api() {
         .catch(error => console.error(error));
 }
 
-get_api();
+// get_api();
